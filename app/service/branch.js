@@ -1,6 +1,6 @@
 'use strict';
 
-const protoFilePath = __dirname + '/../../../../../Services/protos/archive.proto';
+const protoFilePath = __dirname + '/../../protos/archive.proto';
 const packageName = 'Archive';
 const serviceName = 'BranchSrv';
 const address = '127.0.0.1:80051';

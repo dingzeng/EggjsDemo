@@ -1,6 +1,6 @@
 'use strict';
 
-const protoFilePath = __dirname + '/../../../../../Services/protos/system.proto';
+const protoFilePath = __dirname + '/../../protos/system.proto';
 const packageName = 'System';
 const serviceName = 'SystemSrv';
 const address = '127.0.0.1:80054';

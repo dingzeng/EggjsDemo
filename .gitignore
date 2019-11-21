@@ -1,1 +1,9 @@
+# nodejs
 **/node_modules
+
+# eggjs
+/run
+/logs
+
+# proto
+/protos
