@@ -7,22 +7,42 @@ const redis = require('../redisHelper')
 class IdentityController extends BaseController {
   async login() {
     const rules = {
-      Username: { type: 'string' },
-      Password: { type: 'string' }
+      username: { type: 'string' },
+      password: { type: 'string' }
     }
     this.ctx.validate(rules);
     const model = this.ctx.request.body;
-    const user = await this.service.system.getUserByUsername(model.Username);
-
-    if (!user) {
-      this.ctx.body = { status: 1, message: '用户名或密码错误' }
+    const user = await this.service.system.getUserByUsername(model.username);
+    
+    if (!user || model.password != user.Password) {
+      this.failed("用户名或密码错误");
     } else {
+      const roles = await this.service.system.getRolesByUserId(user.Id)
+console.log(roles)
       const token = uuidv1();
-      redis.set(token, user, 10800);
+      const userinfo = {
+        roles: roles.map(r => r.Id),
+        name: user.Name,
+        avatar: '',
+        introduction: ''
+      }
+      redis.set(token, userinfo, 10800);
       this.success({
         token: token
       }, "登录成功");
     }
+  }
+
+  async userinfo(){
+    const token = this.ctx.request.query.token;
+    const cache = await redis.get(token);
+    var userinfo = null;
+    if(cache){
+      console.log(cache)
+      userinfo = JSON.parse(cache)
+    }
+    
+    this.success(userinfo)
   }
 
   async logout() {

@@ -12,6 +12,7 @@ module.exports = app => {
 
   // identity
   router.post('/login', controller.identity.login)
+  router.get('/userinfo', controller.identity.userinfo)
   router.post('/logout', controller.identity.logout)
 
   // modules

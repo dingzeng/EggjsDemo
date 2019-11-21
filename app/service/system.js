@@ -61,7 +61,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.DeleteRoleById({ Body: id }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(false)
         }else{
           resolve(feature.Body)
@@ -74,7 +73,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.UpdateRole(role, function(error, feature){
         if(error){
-          console.log(error)
           resolve(false)
         }else{
           resolve(feature.Body)
@@ -99,7 +97,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.UpdateRolePermissions({ RoleId: RoleId, PermissionCodes: PermissionCodes }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(false)
         }else{
           resolve(feature.Body)
@@ -112,7 +109,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.GetUserByUsername({ Username: username }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(null)
         }else{
           resolve(feature)
@@ -125,7 +121,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.GetUsers({ PageIndex: pageIndex, PageSize: pageSize }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(null)
         }else{
           resolve(feature)
@@ -138,7 +133,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.GetUserById({ Body: userId }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(null)
         }else{
           resolve(feature)
@@ -151,7 +145,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.CreateUser(user, function(error, feature){
         if(error){
-          console.log(error)
           resolve(null)
         }else{
           resolve(feature)
@@ -164,7 +157,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.UpdateUSer(user, function(error, feature){
         if(error){
-          console.log(error)
           resolve(false)
         }else{
           resolve(feature.Body)
@@ -177,7 +169,6 @@ class SystemService extends Service {
     return new Promise(function(resolve, reject){
       client.DeleteUserById({ Body: userId }, function(error, feature){
         if(error){
-          console.log(error)
           resolve(false)
         }else{
           resolve(feature.Body)
@@ -186,6 +177,13 @@ class SystemService extends Service {
     })
   }
 
+  async getRolesByUserId(userId) {
+    return new Promise(function(resolve, reject){
+      client.GetRolesByUserId({ Body: userId }, function(error, feature){
+        resolve(feature.Roles)
+      });
+    })
+  }
 }
 
 module.exports = SystemService;
