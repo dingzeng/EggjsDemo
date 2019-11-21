@@ -1,0 +1,18 @@
+2019-11-20 15:37:00,302 INFO 4493 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js
+2019-11-20 15:37:00,302 INFO 4493 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js
+2019-11-20 15:37:00,302 INFO 4493 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js
+2019-11-20 16:51:41,558 INFO 15960 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js
+2019-11-20 16:51:41,558 INFO 15960 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js
+2019-11-20 16:51:41,558 INFO 15960 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js
+2019-11-20 16:51:44,102 INFO 15950 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 41895923ms at 2019-11-21 04:30:00.025
+2019-11-20 16:51:44,102 INFO 15950 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js next time will execute after 25695898ms at 2019-11-21 00:00:00.000
+2019-11-20 16:51:44,103 INFO 15950 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 25696897ms at 2019-11-21 00:00:01.000
+2019-11-20 16:54:35,693 INFO 16238 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js
+2019-11-20 16:54:35,693 INFO 16238 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js
+2019-11-20 16:54:35,693 INFO 16238 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js
+2019-11-20 17:02:45,202 INFO 17041 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js
+2019-11-20 17:02:45,202 INFO 17041 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js
+2019-11-20 17:02:45,202 INFO 17041 [egg-schedule]: register schedule /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js
+2019-11-20 17:02:54,808 INFO 16956 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-multipart@2.9.1@egg-multipart/app/schedule/clean_tmpdir.js next time will execute after 41225203ms at 2019-11-21 04:30:00.011
+2019-11-20 17:02:54,809 INFO 16956 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/clean_log.js next time will execute after 25025192ms at 2019-11-21 00:00:00.001
+2019-11-20 17:02:54,816 INFO 16956 [Timer] /home/jerry/code/Tripod/Applications/ERP/API/node_modules/_egg-logrotator@3.1.0@egg-logrotator/app/schedule/rotate_by_file.js next time will execute after 25026191ms at 2019-11-21 00:00:01.007
