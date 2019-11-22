@@ -1,5 +1,3 @@
-
-const redis = require('../redisHelper')
 const { ILLEGAL_TOKEN, TOKEN_EXPIRED } = require('../codes');
 
 module.exports = options => {
@@ -22,7 +20,7 @@ module.exports = options => {
             return
         }
 
-        const exists = await redis.get(token);
+        const exists = await ctx.app.redis.get(token);
         if (!exists) {
             ctx.body = {
                 code: TOKEN_EXPIRED,

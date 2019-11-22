@@ -2,7 +2,6 @@
 
 const BaseController = require('./base');
 const uuidv1 = require('uuid/v1');
-const redis = require('../redisHelper')
 
 class IdentityController extends BaseController {
   async login() {
@@ -18,7 +17,6 @@ class IdentityController extends BaseController {
       this.failed("用户名或密码错误");
     } else {
       const roles = await this.service.system.getRolesByUserId(user.Id)
-console.log(roles)
       const token = uuidv1();
       const userinfo = {
         roles: roles.map(r => r.Id),
@@ -26,7 +24,7 @@ console.log(roles)
         avatar: '',
         introduction: ''
       }
-      redis.set(token, userinfo, 10800);
+      await this.app.redis.set(token, userinfo, 10800);
       this.success({
         token: token
       }, "登录成功");
@@ -35,10 +33,9 @@ console.log(roles)
 
   async userinfo(){
     const token = this.ctx.request.query.token;
-    const cache = await redis.get(token);
+    const cache = await this.app.redis.get(token);
     var userinfo = null;
     if(cache){
-      console.log(cache)
       userinfo = JSON.parse(cache)
     }
     

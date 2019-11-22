@@ -10,10 +10,10 @@
     "@grpc/proto-loader": "^0.5.3",
     "egg": "^2.15.1",
     "egg-cors": "^2.2.3",
+    "egg-redis": "^2.4.0",
     "egg-scripts": "^2.11.0",
     "egg-validate": "^2.0.2",
     "grpc": "^1.24.2",
-    "redis": "^2.8.0",
     "uuid": "^3.3.3"
   },
   "devDependencies": {

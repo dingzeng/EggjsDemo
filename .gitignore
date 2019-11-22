@@ -4,6 +4,8 @@
 # eggjs
 /run
 /logs
+/typings
+/config/config.local.js
 
 # proto
 /protos
