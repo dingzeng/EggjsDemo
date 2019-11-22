@@ -46,6 +46,15 @@ module.exports = appInfo => {
     }
   };
 
+  config.redis = {
+    client: {
+      port: 6379,
+      host: 'localhost',
+      password: null,
+      db: 0,
+    }
+  };
+
   return {
     ...config,
     ...userConfig,
