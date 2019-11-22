@@ -46,12 +46,23 @@ module.exports = appInfo => {
     }
   };
 
+  // required in config.[env].js
   config.redis = {
     client: {
       port: 6379,
       host: 'localhost',
       password: null,
       db: 0,
+    }
+  };
+
+  // required in config.[env].js
+  config.grpc = {
+    address: {
+      archive: '',
+      stock: '',
+      purchase: '',
+      system: '',
     }
   };
 

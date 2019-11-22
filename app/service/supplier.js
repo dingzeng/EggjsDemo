@@ -3,15 +3,15 @@
 const protoFilePath = __dirname + '/../../protos/archive.proto';
 const packageName = 'Archive';
 const serviceName = 'SupplierSrv';
-const address = '127.0.0.1:80051';
-const client = require('../grpcLoader')(protoFilePath, packageName, serviceName, address);
 
-const Service = require('egg').Service;
+module.exports = app => {
 
-class SupplierService extends Service {
-    async echo() {
-
+    const address = app.config.grpc.address.archive;
+    const client = require('../grpcLoader')(protoFilePath, packageName, serviceName, address);
+    
+    return class SupplierService extends app.Service {
+        async echo() {
+    
+        }
     }
-}
-
-module.exports = SupplierService;
+};
