@@ -24,7 +24,7 @@ class IdentityController extends BaseController {
         avatar: '',
         introduction: ''
       }
-      await this.app.redis.set(token, userinfo, 10800);
+      await this.app.redis.set(token, JSON.stringify(userinfo));
       this.success({
         token: token
       }, "登录成功");
