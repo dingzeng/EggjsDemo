@@ -90,11 +90,11 @@ module.exports = app => {
     }
 
     async getUserMenus(userId) {
-      return this.call('GetUserMenus', { Body: userId })
+      return (await this.call('GetUserMenus', { Body: userId })).Nodes
     }
 
     async getUserPermissions(userId) {
-      return this.call('GetUserPermissions', { Body: userId })
+      return (await this.call('GetUserPermissions', { Body: userId })).Permissions
     }
   }
 };
