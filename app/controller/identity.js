@@ -16,10 +16,15 @@ class IdentityController extends BaseController {
     if (!user || model.password != user.Password) {
       this.failed("用户名或密码错误");
     } else {
-      const roles = await this.service.system.getRolesByUserId(user.Id)
+      const menus = await this.service.system.getUserMenus(user.Id)
+      var menuTree = menus.filter(m => !m.ParentCode)
+      this.convertMenusToTree(menuTree, menus)
+      const permissions = await this.service.system.getUserPermissions(user.Id)
+
       const token = uuidv1();
       const userinfo = {
-        roles: roles.map(r => r.Id),
+        menus: menuTree,
+        permissions: permissions,
         name: user.Name,
         avatar: '',
         introduction: ''
@@ -29,6 +34,13 @@ class IdentityController extends BaseController {
         token: token
       }, "登录成功");
     }
+  }
+
+  convertMenusToTree(menuTree, menus) {
+    menuTree.forEach(node => {
+      node.children = menus.filter(m => m.ParentCode == node.Code)
+      this.convertMenusToTree(node.children, menus)
+    });
   }
 
   async userinfo(){

@@ -88,5 +88,13 @@ module.exports = app => {
     async getRolesByUserId(userId) {
       return this.call('GetRolesByUserId', { Body: userId })
     }
+
+    async getUserMenus(userId) {
+      return this.call('GetUserMenus', { Body: userId })
+    }
+
+    async getUserPermissions(userId) {
+      return this.call('GetUserPermissions', { Body: userId })
+    }
   }
 };
