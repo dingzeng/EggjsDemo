@@ -10,9 +10,10 @@ module.exports = app => {
   const client = require('../grpcLoader')(protoFilePath, packageName, serviceName, address);
 
   return class SystemService extends app.Service {
-    async getAllMenus() {
+
+    async call(method, param = {}){
       return new Promise(function(resolve, reject){
-        client.GetAllMenus({}, function(error, feature){
+        client[method](param, function(error, feature){
           if(error){
             reject(error)
           }else{
@@ -21,169 +22,71 @@ module.exports = app => {
         });
       })
     }
+
+    // menu
+    async getAllMenus() {
+      return this.call('GetAllMenus')
+    }
   
+    // role
     async getAllRoles() {
-      return new Promise(function(resolve, reject){
-        client.GetAllRoles({}, function(error, feature){
-          if(error){
-            reject(error)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetAllRoles')
     }
   
     async getRoleById(id) {
-      return new Promise(function(resolve, reject){
-        client.GetRoleById({ Body: id }, function(error, feature){
-          if(error){
-            reject(error)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('getRoleById', { Body: id })
     }
-  
+
     async createRole(role) {
-      return new Promise(function(resolve, reject){
-        client.CreateRole(role, function(error, feature){
-          if(error){
-            reject(error)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('CreateRole', role)
     }
   
     async deleteRoleById(id) {
-      return new Promise(function(resolve, reject){
-        client.DeleteRoleById({ Body: id }, function(error, feature){
-          if(error){
-            resolve(false)
-          }else{
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = this.call('DeleteRoleById', { Body: id })
+      return res.Body
     }
   
     async updateRole(role) {
-      return new Promise(function(resolve, reject){
-        client.UpdateRole(role, function(error, feature){
-          if(error){
-            resolve(false)
-          }else{
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('UpdateRole', role)
+      return res.Body
     }
   
     async getRolePermissions(roleId) {
-      return new Promise(function(resolve, reject){
-        client.GetRolePermissions({ Body: roleId }, function(error, feature){
-          if(error){
-            reject(error)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetRolePermissions', { Body: roleId })
     }
   
     async updateRolePermissions({RoleId, PermissionCodes}) {
-      return new Promise(function(resolve, reject){
-        client.UpdateRolePermissions({ RoleId: RoleId, PermissionCodes: PermissionCodes }, function(error, feature){
-          if(error){
-            resolve(false)
-          }else{
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('UpdateRolePermissions', { RoleId: RoleId, PermissionCodes: PermissionCodes })
+      return res.Body
     }
   
+    // user
     async getUserByUsername(username) {
-      return new Promise(function(resolve, reject){
-        client.GetUserByUsername({ Username: username }, function(error, feature){
-          if(error){
-            resolve(null)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetUserByUsername', { Username: username })
     }
   
     async getUsers(pageIndex = 1, pageSize = 20) {
-      return new Promise(function(resolve, reject){
-        client.GetUsers({ PageIndex: pageIndex, PageSize: pageSize }, function(error, feature){
-          if(error){
-            resolve(null)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetUsers', { PageIndex: pageIndex, PageSize: pageSize })
     }
   
     async getUserById(userId) {
-      return new Promise(function(resolve, reject){
-        client.GetUserById({ Body: userId }, function(error, feature){
-          if(error){
-            resolve(null)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetUserById', { Body: userId })
     }
   
     async createUser(user) {
-      return new Promise(function(resolve, reject){
-        client.CreateUser(user, function(error, feature){
-          if(error){
-            resolve(null)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('CreateUser', user)
     }
   
     async updateUSer(user) {
-      return new Promise(function(resolve, reject){
-        client.UpdateUSer(user, function(error, feature){
-          if(error){
-            resolve(false)
-          }else{
-            resolve(feature.Body)
-          }
-        });
-      })
+      return (await this.call('UpdateUSer', user)).Body
     }
   
     async deleteUserById(userId) {
-      return new Promise(function(resolve, reject){
-        client.DeleteUserById({ Body: userId }, function(error, feature){
-          if(error){
-            resolve(false)
-          }else{
-            resolve(feature.Body)
-          }
-        });
-      })
+      return (await this.call('DeleteUserById', { Body: userId })).Body
     }
   
     async getRolesByUserId(userId) {
-      return new Promise(function(resolve, reject){
-        client.GetRolesByUserId({ Body: userId }, function(error, feature){
-          resolve(feature.Roles)
-        });
-      })
+      return this.call('GetRolesByUserId', { Body: userId })
     }
   }
 };

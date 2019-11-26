@@ -10,100 +10,58 @@ module.exports = app => {
   const client = require('../grpcLoader')(protoFilePath, packageName, serviceName, address);
 
   return class BranchService extends app.Service {
-    async getBranchGroups() {
-      return new Promise(function (resolve, reject) {
-        client.GetBranchGroups({}, function (error, feature) {
-          if (error) {
+
+    async call(method, param = {}){
+      return new Promise(function(resolve, reject){
+        client[method](param, function(error, feature){
+          if(error){
             reject(error)
-          } else {
+          }else{
             resolve(feature)
           }
         });
       })
+    }
+
+    async getBranchGroups() {
+      return this.call('GetBranchGroups')
     }
 
     async getBranchGroup(id) {
-      return new Promise(function (resolve, reject) {
-        client.GetBranchGroup({ Body: id }, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetBranchGroup', { Body: id })
     }
 
     async createBranchGroup(branchGroup) {
-      return new Promise(function (resolve, reject) {
-        client.CreateBranchGroup(branchGroup, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('CreateBranchGroup', branchGroup)
     }
 
     async updateBranchGroup(branchGroup) {
-      return new Promise(function (resolve, reject) {
-        client.UpdateBranchGroup(branchGroup, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('UpdateBranchGroup', branchGroup)
+      return res.Body
     }
 
     async deleteBranchGroup(id) {
-      return new Promise(function (resolve, reject) {
-        client.DeleteBranchGroup({ Body: id }, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('DeleteBranchGroup', { Body: id })
+      return res.Body
     }
 
     async getBranchGroupBranchs(branchGroupId) {
-      return new Promise(function (resolve, reject) {
-        client.GetBranchGroupBranchs({ Body: branchGroupId }, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetBranchGroupBranchs', { Body: branchGroupId })
     }
 
     async deleteBranchGroupBranchs(branchGroupId, branchIdList) {
-      return new Promise(function (resolve, reject) {
-        client.DeleteBranchGroupBranchs({ BranchGroupId: branchGroupId, BranchIdList: branchIdList }, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const param = { BranchGroupId: branchGroupId, BranchIdList: branchIdList }
+      const res = await this.call('DeleteBranchGroupBranchs', param)
+      return res.Body
     }
 
     async addBranchGroupBranchs(branchGroupId, branchIdList) {
-      return new Promise(function (resolve, reject) {
-        client.AddBranchGroupBranchs({ BranchGroupId: branchGroupId, BranchIdList: branchIdList }, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const param = {
+        BranchGroupId: branchGroupId, 
+        BranchIdList: branchIdList 
+      }
+      const res = await this.call('AddBranchGroupBranchs', param)
+      return res.Body
     }
 
     /**
@@ -114,92 +72,39 @@ module.exports = app => {
      * @param {String} parentId 上级机构编码
      */
     async getBranchs(pageIndex = 1, pageSize = 20, keyword = '', parentId = '') {
-      return new Promise(function (resolve, reject) {
-        client.GetBranchs({
-          PageIndex: pageIndex,
-          PageSize: pageSize,
-          Keyword: keyword,
-          ParentId: parentId
-        }, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      const param = {
+        PageIndex: pageIndex,
+        PageSize: pageSize,
+        Keyword: keyword,
+        ParentId: parentId
+      }
+      return this.call('GetBranchs', param)
     }
 
     async getBranch(id) {
-      return new Promise(function (resolve, reject) {
-        client.GetBranch({ Body: id }, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetBranch', { Body: id })
     }
 
     async createBranch(branch) {
-      return new Promise(function (resolve, reject) {
-        client.CreateBranch(branch, function (error, feature) {
-          if (error) {
-            reject(error)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('CreateBranch', branch)
     }
 
     async updateBranch(branch) {
-      return new Promise(function (resolve, reject) {
-        client.UpdateBranch(branch, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('UpdateBranch', branch)
+      return res.Body
     }
 
     async deleteBranch(id) {
-      return new Promise(function (resolve, reject) {
-        client.DeleteBranch({ Body: id }, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      return this.call('DeleteBranch', { Body: id })
     }
 
     async getBranchStores(id) {
-      return new Promise(function (resolve, reject) {
-        client.GetBranchStores({ Body: id }, function (error, feature) {
-          if (error) {
-            resolve(null)
-          } else {
-            resolve(feature)
-          }
-        });
-      })
+      return this.call('GetBranchStores', { Body: id })
     }
 
     async updateBranchStores(branchId, stores) {
-      return new Promise(function (resolve, reject) {
-        client.UpdateBranchStores({ BranchId: branchId, Stores: stores }, function (error, feature) {
-          if (error) {
-            resolve(false)
-          } else {
-            resolve(feature.Body)
-          }
-        });
-      })
+      const res = await this.call('UpdateBranchStores', { BranchId: branchId, Stores: stores })
+      return res.Body
     }
   }
 }
