@@ -47,7 +47,14 @@ class IdentityController extends BaseController {
   }
 
   async logout() {
+    const rules = {
+      token: { type: 'string' }
+    }
+    this.ctx.validate(rules);
+    const model = this.ctx.request.body;
 
+    await this.app.redis.del(model.token);
+    this.success();
   }
 }
 
