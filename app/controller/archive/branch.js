@@ -5,8 +5,11 @@ const BaseController = require('../base');
 class BranchController extends BaseController {
     async getBranchs() {
         const { pageIndex, pageSize, keyword, parentId } = this.ctx.request.query;
-        const branchs = await this.service.branch.getBranchs(pageIndex, pageSize, keyword, parentId);
-        this.success(branchs);
+        const response = await this.service.branch.getBranchs(pageIndex, pageSize, keyword, parentId);
+        this.success({
+            list: response.Branchs,
+            totalCount: response.TotalCount
+        });
     }
 
     async getBranch() {

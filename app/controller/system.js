@@ -10,7 +10,7 @@ class SystemController extends BaseController {
 
     async getAllRoles() {
         const roles = await this.service.system.getAllRoles();
-        this.success(roles);
+        this.success(roles.Roles);
     }
   
     async getRole() {
@@ -21,7 +21,8 @@ class SystemController extends BaseController {
   
     async createRole() {
         const rules = {
-            Name: { type: 'string' }
+            Name: { type: 'string' },
+            Memo: 'string?'
         };
         this.ctx.validate(rules);
         const model = this.ctx.request.body;
@@ -31,8 +32,9 @@ class SystemController extends BaseController {
   
     async updateRole() {
         const rules = {
-            Id: { type: 'id' },
-            Name: { type: 'string' }
+            Id: { type: 'int' },
+            Name: { type: 'string' },
+            Memo: 'string?'
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if(errors){

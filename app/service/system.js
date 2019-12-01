@@ -42,7 +42,7 @@ module.exports = app => {
     }
   
     async deleteRoleById(id) {
-      const res = this.call('DeleteRoleById', { Body: id })
+      const res = await this.call('DeleteRoleById', { Body: id })
       return res.Body
     }
   
