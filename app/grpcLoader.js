@@ -6,7 +6,7 @@ module.exports = (protoFilePath, packageName, serviceName, address) => {
     var packageDefinition = protoLoader.loadSync(
         protoFilePath,
         {
-            keepCase: true,
+            keepCase: false,
             longs: String,
             enums: String,
             defaults: true,
