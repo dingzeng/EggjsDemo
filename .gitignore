@@ -7,6 +7,3 @@ package-lock.json
 /logs
 /typings
 /config/config.local.js
-
-# proto
-/protos
