@@ -9,8 +9,8 @@ class SystemController extends BaseController {
     }
 
     async getAllRoles() {
-        const roles = await this.service.system.getAllRoles();
-        this.success(roles.Roles);
+        const response = await this.service.system.getAllRoles();
+        this.success(response.roles);
     }
   
     async getRole() {
@@ -21,8 +21,8 @@ class SystemController extends BaseController {
   
     async createRole() {
         const rules = {
-            Name: { type: 'string' },
-            Memo: 'string?'
+            name: { type: 'string' },
+            memo: 'string?'
         };
         this.ctx.validate(rules);
         const model = this.ctx.request.body;
@@ -32,9 +32,9 @@ class SystemController extends BaseController {
   
     async updateRole() {
         const rules = {
-            Id: { type: 'int' },
-            Name: { type: 'string' },
-            Memo: 'string?'
+            id: { type: 'int' },
+            name: { type: 'string' },
+            memo: 'string?'
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if(errors){
@@ -70,8 +70,8 @@ class SystemController extends BaseController {
      */
     async updateRolePermissions() {
         const rules = {
-            RoleId: 'id',
-            PermissionCodes: { type: 'array', itemType: 'string', min: 1 }
+            roleId: 'id',
+            permissionCodes: { type: 'array', itemType: 'string', min: 1 }
         }
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if(errors){
@@ -99,8 +99,8 @@ class SystemController extends BaseController {
 
         const pagingResult = await this.service.system.getUsers(query.pageIndex, query.pageSize);
         this.success({
-            totalCount: pagingResult.TotalCount,
-            list: pagingResult.Users
+            totalCount: pagingResult.totalCount,
+            list: pagingResult.users
         });
     }
   
@@ -112,11 +112,11 @@ class SystemController extends BaseController {
   
     async createUser() {
         const rules = {
-            BranchCode: 'string',
-            Username: 'string',
-            Password: 'string',
-            Name: 'string',
-            Mobile: { type: 'string', required: false }
+            branchCode: 'string',
+            username: 'string',
+            password: 'string',
+            name: 'string',
+            mobile: { type: 'string', required: false }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);

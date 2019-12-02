@@ -7,8 +7,8 @@ class BranchController extends BaseController {
         const { pageIndex, pageSize, keyword, parentId } = this.ctx.request.query;
         const response = await this.service.branch.getBranchs(pageIndex, pageSize, keyword, parentId);
         this.success({
-            list: response.Branchs,
-            totalCount: response.TotalCount
+            list: response.branchs,
+            totalCount: response.totalCount
         });
     }
 
@@ -20,8 +20,8 @@ class BranchController extends BaseController {
 
     async createBranch() {
         const rules = {
-            Id: { type: 'int' },
-            Name: { type: 'string' }
+            id: { type: 'int' },
+            name: { type: 'string' }
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if (errors) {
@@ -37,8 +37,8 @@ class BranchController extends BaseController {
 
     async updateBranch() {
         const rules = {
-            Id: { type: 'int' },
-            Name: { type: 'string' }
+            id: { type: 'int' },
+            name: { type: 'string' }
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if (errors) {

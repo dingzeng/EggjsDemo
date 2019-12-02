@@ -16,7 +16,7 @@ module.exports = app => {
     }
 
     async getBranchGroup(id) {
-      return client.call('GetBranchGroup', { Body: id })
+      return client.call('GetBranchGroup', { body: id })
     }
 
     async createBranchGroup(branchGroup) {
@@ -25,31 +25,34 @@ module.exports = app => {
 
     async updateBranchGroup(branchGroup) {
       const res = await client.call('UpdateBranchGroup', branchGroup)
-      return res.Body
+      return res.body
     }
 
     async deleteBranchGroup(id) {
-      const res = await client.call('DeleteBranchGroup', { Body: id })
-      return res.Body
+      const res = await client.call('DeleteBranchGroup', { body: id })
+      return res.body
     }
 
     async getBranchGroupBranchs(branchGroupId) {
-      return client.call('GetBranchGroupBranchs', { Body: branchGroupId })
+      return client.call('GetBranchGroupBranchs', { body: branchGroupId })
     }
 
     async deleteBranchGroupBranchs(branchGroupId, branchIdList) {
-      const param = { BranchGroupId: branchGroupId, BranchIdList: branchIdList }
+      const param = { 
+        branchGroupId, 
+        branchIdList 
+      }
       const res = await client.call('DeleteBranchGroupBranchs', param)
-      return res.Body
+      return res.body
     }
 
     async addBranchGroupBranchs(branchGroupId, branchIdList) {
       const param = {
-        BranchGroupId: branchGroupId,
-        BranchIdList: branchIdList
+        branchGroupId,
+        branchIdList
       }
       const res = await client.call('AddBranchGroupBranchs', param)
-      return res.Body
+      return res.body
     }
 
     /**
@@ -61,16 +64,16 @@ module.exports = app => {
      */
     async getBranchs(pageIndex = 1, pageSize = 20, keyword = '', parentId = '') {
       const param = {
-        PageIndex: pageIndex,
-        PageSize: pageSize,
-        Keyword: keyword,
-        ParentId: parentId
+        pageIndex,
+        pageSize,
+        keyword,
+        parentId
       }
       return client.call('GetBranchs', param)
     }
 
     async getBranch(id) {
-      return client.call('GetBranch', { Body: id })
+      return client.call('GetBranch', { body: id })
     }
 
     async createBranch(branch) {
@@ -79,20 +82,20 @@ module.exports = app => {
 
     async updateBranch(branch) {
       const res = await client.call('UpdateBranch', branch)
-      return res.Body
+      return res.body
     }
 
     async deleteBranch(id) {
-      return client.call('DeleteBranch', { Body: id })
+      return client.call('DeleteBranch', { body: id })
     }
 
     async getBranchStores(id) {
-      return client.call('GetBranchStores', { Body: id })
+      return client.call('GetBranchStores', { body: id })
     }
 
     async updateBranchStores(branchId, stores) {
-      const res = await client.call('UpdateBranchStores', { BranchId: branchId, Stores: stores })
-      return res.Body
+      const res = await client.call('UpdateBranchStores', { branchId, stores })
+      return res.body
     }
   }
 }

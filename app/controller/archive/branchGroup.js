@@ -5,7 +5,7 @@ const BaseController = require('../base');
 class BranchGroupController extends BaseController {
     async getBranchGroups() {
         const branchGroups = await this.service.branch.getBranchGroups();
-        this.success(branchGroups);
+        this.success(branchGroups.branchGroups);
     }
 
     async getBranchGroup() {
@@ -16,7 +16,7 @@ class BranchGroupController extends BaseController {
 
     async createBranchGroup() {
         const rules = {
-            Name: { type: 'string' }
+            name: { type: 'string' }
         };
         this.ctx.validate(rules);
         const model = this.ctx.request.body;
@@ -26,8 +26,8 @@ class BranchGroupController extends BaseController {
 
     async updateBranchGroup() {
         const rules = {
-            Id: { type: 'int' },
-            Name: { type: 'string' }
+            id: { type: 'int' },
+            name: { type: 'string' }
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
         if (errors) {

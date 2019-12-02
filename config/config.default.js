@@ -16,7 +16,7 @@ module.exports = appInfo => {
   config.keys = appInfo.name + '_1572964087660_9537';
 
   // add your middleware config here
-  config.middleware = ['auth', 'toLowerCase'];
+  config.middleware = ['auth'];
 
   config.auth = {
     ignore: '.'

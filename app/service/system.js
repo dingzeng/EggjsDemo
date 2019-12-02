@@ -22,7 +22,7 @@ module.exports = app => {
     }
 
     async getRoleById(id) {
-      return client.call('getRoleById', { Body: id })
+      return client.call('getRoleById', { body: id })
     }
 
     async createRole(role) {
@@ -30,35 +30,35 @@ module.exports = app => {
     }
 
     async deleteRoleById(id) {
-      const res = await client.call('DeleteRoleById', { Body: id })
-      return res.Body
+      const res = await client.call('DeleteRoleById', { body: id })
+      return res.body
     }
 
     async updateRole(role) {
       const res = await client.call('UpdateRole', role)
-      return res.Body
+      return res.body
     }
 
     async getRolePermissions(roleId) {
-      return client.call('GetRolePermissions', { Body: roleId })
+      return client.call('GetRolePermissions', { body: roleId })
     }
 
-    async updateRolePermissions({ RoleId, PermissionCodes }) {
-      const res = await client.call('UpdateRolePermissions', { RoleId: RoleId, PermissionCodes: PermissionCodes })
-      return res.Body
+    async updateRolePermissions({ roleId, permissionCodes }) {
+      const res = await client.call('UpdateRolePermissions', { roleId, permissionCodes })
+      return res.body
     }
 
     // user
     async getUserByUsername(username) {
-      return client.call('GetUserByUsername', { Username: username })
+      return client.call('GetUserByUsername', { username })
     }
 
     async getUsers(pageIndex = 1, pageSize = 20) {
-      return client.call('GetUsers', { PageIndex: pageIndex, PageSize: pageSize })
+      return client.call('GetUsers', { pageIndex, pageSize })
     }
 
     async getUserById(userId) {
-      return client.call('GetUserById', { Body: userId })
+      return client.call('GetUserById', { body: userId })
     }
 
     async createUser(user) {
@@ -66,23 +66,25 @@ module.exports = app => {
     }
 
     async updateUSer(user) {
-      return (await client.call('UpdateUSer', user)).Body
+      return (await client.call('UpdateUSer', user)).body
     }
 
     async deleteUserById(userId) {
-      return (await client.call('DeleteUserById', { Body: userId })).Body
+      return (await client.call('DeleteUserById', { body: userId })).body
     }
 
     async getRolesByUserId(userId) {
-      return client.call('GetRolesByUserId', { Body: userId })
+      return client.call('GetRolesByUserId', { body: userId })
     }
 
     async getUserMenus(userId) {
-      return (await client.call('GetUserMenus', { Body: userId })).Nodes
+      const response = await client.call('GetUserMenus', { body: userId })
+      return response.nodes
     }
 
     async getUserPermissions(userId) {
-      return (await client.call('GetUserPermissions', { Body: userId })).Permissions
+      const response = await client.call('GetUserPermissions', { body: userId });
+      return response.permissions
     }
   }
 };

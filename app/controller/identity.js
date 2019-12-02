@@ -13,12 +13,11 @@ class IdentityController extends BaseController {
     const model = this.ctx.request.body;
     const user = await this.service.system.getUserByUsername(model.username);
     
-    if (!user || model.password != user.Password) {
+    if (!user || model.password != user.password) {
       this.failed("用户名或密码错误");
     } else {
-      const menus = await this.service.system.getUserMenus(user.Id)
-      console.log(menus)
-      const permissions = await this.service.system.getUserPermissions(user.Id)
+      const menus = await this.service.system.getUserMenus(user.id)
+      const permissions = await this.service.system.getUserPermissions(user.id)
 
       const token = uuidv1();
       const userinfo = {
