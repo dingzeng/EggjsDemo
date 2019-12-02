@@ -59,10 +59,10 @@ module.exports = appInfo => {
   // required in config.[env].js
   config.grpc = {
     address: {
-      archive: '',
-      stock: '',
-      purchase: '',
-      system: '',
+      archive: 'localhost:8051',
+      purchase: 'localhost:8052',
+      stock: 'localhost:8053',
+      system: 'localhost:8054',
     }
   };
 

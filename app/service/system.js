@@ -11,90 +11,78 @@ module.exports = app => {
 
   return class SystemService extends app.Service {
 
-    async call(method, param = {}){
-      return new Promise(function(resolve, reject){
-        client[method](param, function(error, feature){
-          if(error){
-            reject(error)
-          }else{
-            resolve(feature)
-          }
-        });
-      })
-    }
-
     // menu
     async getAllMenus() {
-      return this.call('GetAllMenus')
+      return client.call('GetAllMenus')
     }
-  
+
     // role
     async getAllRoles() {
-      return this.call('GetAllRoles')
+      return client.call('GetAllRoles')
     }
-  
+
     async getRoleById(id) {
-      return this.call('getRoleById', { Body: id })
+      return client.call('getRoleById', { Body: id })
     }
 
     async createRole(role) {
-      return this.call('CreateRole', role)
+      return client.call('CreateRole', role)
     }
-  
+
     async deleteRoleById(id) {
-      const res = await this.call('DeleteRoleById', { Body: id })
+      const res = await client.call('DeleteRoleById', { Body: id })
       return res.Body
     }
-  
+
     async updateRole(role) {
-      const res = await this.call('UpdateRole', role)
+      const res = await client.call('UpdateRole', role)
       return res.Body
     }
-  
+
     async getRolePermissions(roleId) {
-      return this.call('GetRolePermissions', { Body: roleId })
+      return client.call('GetRolePermissions', { Body: roleId })
     }
-  
-    async updateRolePermissions({RoleId, PermissionCodes}) {
-      const res = await this.call('UpdateRolePermissions', { RoleId: RoleId, PermissionCodes: PermissionCodes })
+
+    async updateRolePermissions({ RoleId, PermissionCodes }) {
+      const res = await client.call('UpdateRolePermissions', { RoleId: RoleId, PermissionCodes: PermissionCodes })
       return res.Body
     }
-  
+
     // user
     async getUserByUsername(username) {
-      return this.call('GetUserByUsername', { Username: username })
+      return client.call('GetUserByUsername', { Username: username })
     }
-  
+
     async getUsers(pageIndex = 1, pageSize = 20) {
-      return this.call('GetUsers', { PageIndex: pageIndex, PageSize: pageSize })
+      return client.call('GetUsers', { PageIndex: pageIndex, PageSize: pageSize })
     }
-  
+
     async getUserById(userId) {
-      return this.call('GetUserById', { Body: userId })
+      return client.call('GetUserById', { Body: userId })
     }
-  
+
     async createUser(user) {
-      return this.call('CreateUser', user)
+      return client.call('CreateUser', user)
     }
-  
+
     async updateUSer(user) {
-      return (await this.call('UpdateUSer', user)).Body
+      return (await client.call('UpdateUSer', user)).Body
     }
-  
+
     async deleteUserById(userId) {
-      return (await this.call('DeleteUserById', { Body: userId })).Body
+      return (await client.call('DeleteUserById', { Body: userId })).Body
     }
-  
+
     async getRolesByUserId(userId) {
-      return this.call('GetRolesByUserId', { Body: userId })
+      return client.call('GetRolesByUserId', { Body: userId })
     }
 
     async getUserMenus(userId) {
-      return (await this.call('GetUserMenus', { Body: userId })).Nodes
+      return (await client.call('GetUserMenus', { Body: userId })).Nodes
     }
 
     async getUserPermissions(userId) {
-      return (await this.call('GetUserPermissions', { Body: userId })).Permissions
+      return (await client.call('GetUserPermissions', { Body: userId })).Permissions
     }
   }
 };
