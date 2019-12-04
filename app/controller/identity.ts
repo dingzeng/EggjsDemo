@@ -1,3 +1,4 @@
+import { MenuNode, Permission } from '../model/module'
 import BaseController from './base'
 const uuidv1 = require('uuid/v1');
 

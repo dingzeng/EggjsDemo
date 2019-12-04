@@ -1,3 +1,11 @@
+import { 
+  Paged,
+  Menu,
+  Role,
+  User,
+  Permission,
+  MenuNode
+} from '../model/module'
 import { Context, Service } from 'egg';
 import grpcLoader from '../grpcLoader';
 

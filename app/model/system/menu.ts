@@ -1,4 +1,4 @@
-class Menu {
+export class Menu {
   code: string;
   parentCode: string;
   path: string;

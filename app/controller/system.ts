@@ -1,3 +1,6 @@
+import {
+    Menu
+} from '../model/module'
 import BaseController from './base'
 
 /**

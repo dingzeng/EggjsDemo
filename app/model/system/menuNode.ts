@@ -1,4 +1,4 @@
-class MenuNode {
+export class MenuNode {
     code: string;
     parentCode: string;
     path: string;

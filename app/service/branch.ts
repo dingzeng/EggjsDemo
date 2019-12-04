@@ -1,3 +1,8 @@
+import {
+  BranchGroup,
+  Branch,
+  Store
+} from '../model/module'
 import { Context, Service } from 'egg';
 import grpcLoader from '../grpcLoader';
 
