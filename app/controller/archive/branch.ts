@@ -3,8 +3,11 @@ import BaseController from '../base'
 
 export default class BranchController extends BaseController {
     public async getBranchs() {
-        const { pageIndex, pageSize, keyword, parentId } = this.ctx.request.query;
-        const response = await this.service.branch.getBranchs(pageIndex, pageSize, keyword, parentId);
+        const query = this.ctx.request.query;
+        let pageIndex: number = query.pageIndex as unknown as number;
+        let pageSize: number = query.pageSize as unknown as number;
+
+        const response = await this.service.branch.getBranchs(pageIndex, pageSize, query.keyword, query.parentId);
         this.success({
             list: response.branchs,
             totalCount: response.totalCount

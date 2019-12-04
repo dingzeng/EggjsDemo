@@ -1,7 +1,8 @@
+import { Context } from 'egg';
 const { ILLEGAL_TOKEN, TOKEN_EXPIRED } = require('../codes');
 
-export default options => {
-    return async function auth(ctx, next) {
+export default (options: any) => {
+    return async function auth(ctx: Context, next: () => Promise<any>) {
         const ignore = options.ignore;
         if (ignore) {
             if (new RegExp(ignore).test(ctx.url)) {

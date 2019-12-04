@@ -1,0 +1,3 @@
+class BranchGroup {
+    id: string
+}

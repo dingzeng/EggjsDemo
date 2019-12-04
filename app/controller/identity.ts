@@ -21,7 +21,7 @@ export default class IdentityController extends BaseController {
       const userinfo = {
         menus: menus,
         permissions: permissions,
-        name: user.Name,
+        name: user.name,
         avatar: '',
         introduction: ''
       }
