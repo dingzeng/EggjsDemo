@@ -9,8 +9,8 @@ export default class BranchController extends BaseController {
 
         const response = await this.service.branch.getBranchs(pageIndex, pageSize, query.keyword, query.parentId);
         this.success({
-            list: response.branchs,
-            totalCount: response.totalCount
+            list: response,
+            totalCount: response.length
         });
     }
 

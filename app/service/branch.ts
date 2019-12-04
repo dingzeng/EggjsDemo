@@ -7,15 +7,23 @@ const serviceName = 'BranchSrv';
 
 export default class BranchService extends Service {
 
+  /**
+   * Grpc client
+   */
   client: any;
+
+  /**
+   * Ctor
+   */
   constructor(ctx: Context) {
-    super(ctx);
+    super(ctx)
     let address = ctx.app.config.grpc.address.archive;
     this.client = grpcLoader(protoFilePath, packageName, serviceName, address);
   }
 
-  public async getBranchGroups() {
-    return this.client.call('GetBranchGroups')
+  public async getBranchGroups(): Promise<Array<BranchGroup>> {
+    let response = await this.client.call('GetBranchGroups')
+    return response.branchGroups
   }
 
   public async getBranchGroup(id: string): Promise<BranchGroup> {
@@ -26,21 +34,21 @@ export default class BranchService extends Service {
     return this.client.call('CreateBranchGroup', branchGroup)
   }
 
-  public async updateBranchGroup(branchGroup) {
+  public async updateBranchGroup(branchGroup: BranchGroup): Promise<BranchGroup> {
     const res = await this.client.call('UpdateBranchGroup', branchGroup)
     return res.body
   }
 
-  public async deleteBranchGroup(id) {
+  public async deleteBranchGroup(id: number): Promise<boolean> {
     const res = await this.client.call('DeleteBranchGroup', { body: id })
     return res.body
   }
 
-  public async getBranchGroupBranchs(branchGroupId) {
+  public async getBranchGroupBranchs(branchGroupId: number): Promise<Branch> {
     return this.client.call('GetBranchGroupBranchs', { body: branchGroupId })
   }
 
-  public async deleteBranchGroupBranchs(branchGroupId, branchIdList) {
+  public async deleteBranchGroupBranchs(branchGroupId: number, branchIdList: Array<number>): Promise<boolean> {
     const param = {
       branchGroupId,
       branchIdList
@@ -49,7 +57,7 @@ export default class BranchService extends Service {
     return res.body
   }
 
-  public async addBranchGroupBranchs(branchGroupId, branchIdList) {
+  public async addBranchGroupBranchs(branchGroupId: number, branchIdList: Array<number>): Promise<boolean> {
     const param = {
       branchGroupId,
       branchIdList
@@ -60,12 +68,12 @@ export default class BranchService extends Service {
 
   /**
    * 机构分页
-   * @param {Number} pageIndex 页码
-   * @param {Number} pageSize 页大小
-   * @param {String} keyword 搜索关键字
-   * @param {String} parentId 上级机构编码
+   * @param pageIndex 页码
+   * @param pageSize 页大小
+   * @param keyword 搜索关键字
+   * @param parentId 上级机构编码
    */
-  public async getBranchs(pageIndex = 1, pageSize = 20, keyword = '', parentId = '') {
+  public async getBranchs(pageIndex: number = 1, pageSize: number = 20, keyword: string = '', parentId: string = ''): Promise<Array<Branch>> {
     const param = {
       pageIndex,
       pageSize,
@@ -75,28 +83,29 @@ export default class BranchService extends Service {
     return this.client.call('GetBranchs', param)
   }
 
-  public async getBranch(id) {
+  public async getBranch(id: number): Promise<Branch> {
     return this.client.call('GetBranch', { body: id })
   }
 
-  public async createBranch(branch) {
+  public async createBranch(branch: Branch): Promise<Branch> {
     return this.client.call('CreateBranch', branch)
   }
 
-  public async updateBranch(branch) {
+  public async updateBranch(branch: Branch): Promise<boolean> {
     const res = await this.client.call('UpdateBranch', branch)
     return res.body
   }
 
-  public async deleteBranch(id) {
+  public async deleteBranch(id: number): Promise<Branch> {
     return this.client.call('DeleteBranch', { body: id })
   }
 
-  public async getBranchStores(id) {
-    return this.client.call('GetBranchStores', { body: id })
+  public async getBranchStores(id: number): Promise<Store> {
+    let response = this.client.call('GetBranchStores', { body: id })
+    return response.stores
   }
 
-  public async updateBranchStores(branchId, stores) {
+  public async updateBranchStores(branchId: number, stores: Array<Store>): Promise<boolean> {
     const res = await this.client.call('UpdateBranchStores', { branchId, stores })
     return res.body
   }

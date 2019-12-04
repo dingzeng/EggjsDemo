@@ -3,7 +3,7 @@ import BaseController from '../base'
 export default class BranchGroupController extends BaseController {
     public async getBranchGroups() {
         const branchGroups = await this.service.branch.getBranchGroups();
-        this.success(branchGroups.branchGroups);
+        this.success(branchGroups);
     }
 
     public async getBranchGroup() {

@@ -1,14 +1,18 @@
 import BaseController from './base'
 
+/**
+ * 系统管理控制器
+ */
 export default class SystemController extends BaseController {
+
     public async getMenus() {
-        const menus = await this.service.system.getAllMenus();
+        let menus: Array<Menu> = await this.service.system.getAllMenus();
         this.success(menus);
     }
 
     public async getAllRoles() {
-        const response = await this.service.system.getAllRoles();
-        this.success(response.roles);
+        let response = await this.service.system.getAllRoles();
+        this.success(response);
     }
 
     public async getRole() {
@@ -77,8 +81,9 @@ export default class SystemController extends BaseController {
             return;
         }
 
-        const model = this.ctx.request.body;
-        const success = await this.service.system.updateRolePermissions(model);
+        let roleId: number = this.ctx.request.body.roleId;
+        let permissionCodes: Array<string> = this.ctx.request.body.permissionCodes
+        const success = await this.service.system.updateRolePermissions(roleId, permissionCodes);
 
         success ? this.success() : this.failed();
     }
@@ -96,10 +101,7 @@ export default class SystemController extends BaseController {
         }
 
         const pagingResult = await this.service.system.getUsers(query.pageIndex, query.pageSize);
-        this.success({
-            totalCount: pagingResult.totalCount,
-            list: pagingResult.users
-        });
+        this.success(pagingResult);
     }
 
     public async getUser() {
@@ -147,7 +149,10 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        user = await this.service.system.updateUserInfo(user);
+        const success = await this.service.system.updateUserInfo(user);
+        if(!success) {
+            this.failed()
+        }
         this.success(user);
     }
 
@@ -169,7 +174,10 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        user = await this.service.system.updateUserInfo(user);
+        const success = await this.service.system.updateUserInfo(user);
+        if(!success) {
+            this.failed();
+        }
         this.success(user);
     }
 
@@ -194,7 +202,7 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        user = await this.service.system.updateUserInfo(user);
+        await this.service.system.updateUserInfo(user);
         this.success(user);
     }
 
