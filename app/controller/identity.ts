@@ -1,10 +1,8 @@
-'use strict';
-
-const BaseController = require('./base');
+import BaseController from './base'
 const uuidv1 = require('uuid/v1');
 
-class IdentityController extends BaseController {
-  async login() {
+export default class IdentityController extends BaseController {
+  public async login() {
     const rules = {
       username: { type: 'string' },
       password: { type: 'string' }
@@ -12,7 +10,7 @@ class IdentityController extends BaseController {
     this.ctx.validate(rules);
     const model = this.ctx.request.body;
     const user = await this.service.system.getUserByUsername(model.username);
-    
+
     if (!user || model.password != user.password) {
       this.failed("用户名或密码错误");
     } else {
@@ -34,18 +32,18 @@ class IdentityController extends BaseController {
     }
   }
 
-  async userinfo(){
+  public async userinfo() {
     const token = this.ctx.request.query.token;
     const cache = await this.app.redis.get(token);
     var userinfo = null;
-    if(cache){
+    if (cache) {
       userinfo = JSON.parse(cache)
     }
-    
+
     this.success(userinfo)
   }
 
-  async logout() {
+  public async logout() {
     const rules = {
       token: { type: 'string' }
     }
@@ -56,5 +54,3 @@ class IdentityController extends BaseController {
     this.success();
   }
 }
-
-module.exports = IdentityController;

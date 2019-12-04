@@ -1,11 +1,9 @@
-'use strict';
-
-module.exports = app => {
+export default app => {
     const { router, controller } = app;
 
     // menu
     router.get('/system/menus', controller.system.getMenus)
-    
+
     // role
     router.get('/system/roles', controller.system.getAllRoles);
     router.get('/system/role/:id', controller.system.getRole);
@@ -14,7 +12,7 @@ module.exports = app => {
     router.del('/system/role/:id', controller.system.deleteRole);
     router.get('/system/role/:roleId/permissions', controller.system.getRolePermissions);
     router.put('/system/role/:roleId/permissions', controller.system.updateRolePermissions);
-  
+
     // user
     router.get('/system/users', controller.system.getUsers)
     router.get('/system/user/:id', controller.system.getUser)

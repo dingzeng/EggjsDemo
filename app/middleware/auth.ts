@@ -1,6 +1,6 @@
 const { ILLEGAL_TOKEN, TOKEN_EXPIRED } = require('../codes');
 
-module.exports = options => {
+export default options => {
     return async function auth(ctx, next) {
         const ignore = options.ignore;
         if (ignore) {

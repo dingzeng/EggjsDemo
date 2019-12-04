@@ -1,10 +1,9 @@
-'use strict';
+import { Controller } from 'egg';
 
-const Controller = require('egg').Controller;
 const { SUCCESS, FAILED, VALIDATTION_FAILED } = require('../codes');
 
-class BaseController extends Controller {
-  success(data = null, message = 'success') {
+export default class BaseController extends Controller {
+  public success(data: any = null, message: string = 'success') {
     this.ctx.body = {
       code: SUCCESS,
       message: message,
@@ -12,7 +11,7 @@ class BaseController extends Controller {
     }
   }
 
-  failed(message = '操作失败') {
+  public failed(message: string = '操作失败') {
     this.ctx.body = {
       code: FAILED,
       message: message,
@@ -20,7 +19,7 @@ class BaseController extends Controller {
     }
   }
 
-  validationFailed(errors) {
+  public validationFailed(errors: any) {
     this.ctx.body = {
       code: VALIDATTION_FAILED,
       message: '参数验证失败',
@@ -30,5 +29,3 @@ class BaseController extends Controller {
     }
   }
 }
-
-module.exports = BaseController;

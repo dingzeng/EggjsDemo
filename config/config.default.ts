@@ -1,18 +1,7 @@
-/* eslint valid-jsdoc: "off" */
+import { EggAppConfig, EggAppInfo, PowerPartial } from 'egg';
 
-'use strict';
-
-/**
- * @param {Egg.EggAppInfo} appInfo app info
- */
-module.exports = appInfo => {
-  /**
-   * built-in config
-   * @type {Egg.EggAppConfig}
-   **/
-  const config = exports = {};
-
-  // use for cookie sign key, should change to your own and keep security
+export default (appInfo: EggAppInfo) => {
+  const config = {} as PowerPartial<EggAppConfig>;
   config.keys = appInfo.name + '_1572964087660_9537';
 
   // add your middleware config here
@@ -29,7 +18,7 @@ module.exports = appInfo => {
 
   config.security = {
     csrf: {
-      ignore: ctx => true
+      ignore: () => true
     }
   };
 
@@ -51,7 +40,7 @@ module.exports = appInfo => {
     client: {
       port: 6379,
       host: 'localhost',
-      password: null,
+      password: '',
       db: 0,
     }
   };

@@ -1,25 +1,23 @@
-'use strict';
+import BaseController from './base'
 
-const BaseController = require('./base');
-
-class SystemController extends BaseController {
-    async getMenus() {
+export default class SystemController extends BaseController {
+    public async getMenus() {
         const menus = await this.service.system.getAllMenus();
         this.success(menus);
     }
 
-    async getAllRoles() {
+    public async getAllRoles() {
         const response = await this.service.system.getAllRoles();
         this.success(response.roles);
     }
-  
-    async getRole() {
+
+    public async getRole() {
         const id = this.ctx.params.id;
         const role = await this.service.system.getRoleById(id);
         this.success(role);
     }
-  
-    async createRole() {
+
+    public async createRole() {
         const rules = {
             name: { type: 'string' },
             memo: 'string?'
@@ -29,15 +27,15 @@ class SystemController extends BaseController {
         const role = await this.service.system.createRole(model);
         this.success(role, '角色创建成功');
     }
-  
-    async updateRole() {
+
+    public async updateRole() {
         const rules = {
             id: { type: 'int' },
             name: { type: 'string' },
             memo: 'string?'
         };
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
@@ -47,20 +45,20 @@ class SystemController extends BaseController {
 
         success ? this.success() : this.failed();
     }
-  
-    async deleteRole() {
+
+    public async deleteRole() {
         const id = this.ctx.params.id;
         const success = await this.service.system.deleteRoleById(id);
 
         success ? this.success() : this.failed();
     }
-  
-    async getRolePermissions() {
+
+    public async getRolePermissions() {
         const roleId = this.ctx.params.roleId;
         const permissions = await this.service.system.getRolePermissions(roleId);
         this.success(permissions);
     }
-  
+
     /**
      * remark:
      *  PUT: /system/role/:roleId/permissions
@@ -68,13 +66,13 @@ class SystemController extends BaseController {
      *  添加角色权限：POST /system/role/:roleId/permission
      *  删除角色权限：DELETE /system/role/:roleId/permission/:permissionCode
      */
-    async updateRolePermissions() {
+    public async updateRolePermissions() {
         const rules = {
             roleId: 'id',
             permissionCodes: { type: 'array', itemType: 'string', min: 1 }
         }
         const errors = this.app.validator.validate(rules, this.ctx.request.body);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
@@ -85,14 +83,14 @@ class SystemController extends BaseController {
         success ? this.success() : this.failed();
     }
 
-    async getUsers() {
+    public async getUsers() {
         const { query } = this.ctx;
         const rules = {
             pageIndex: { type: 'int', min: 1, convertType: 'int' },
             pageSize: { type: 'int', convertType: 'int' }
         }
         const errors = this.app.validator.validate(rules, query);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
@@ -103,14 +101,14 @@ class SystemController extends BaseController {
             list: pagingResult.users
         });
     }
-  
-    async getUser() {
+
+    public async getUser() {
         const id = this.ctx.params.id;
         const user = await this.service.system.getUserById(id);
         this.success(user);
     }
-  
-    async createUser() {
+
+    public async createUser() {
         const rules = {
             branchCode: 'string',
             username: 'string',
@@ -120,15 +118,15 @@ class SystemController extends BaseController {
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
         const user = await this.service.system.createUser(model);
         this.success(user);
     }
-  
-    async updateUserInfo() {
+
+    public async updateUserInfo() {
         const rules = {
             id: 'id',
             branchCode: 'string',
@@ -139,12 +137,12 @@ class SystemController extends BaseController {
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
         var user = await this.service.system.getUserById(model.id);
-        if(!user){
+        if (!user) {
             this.failed('用户不存在');
             return;
         }
@@ -152,8 +150,8 @@ class SystemController extends BaseController {
         user = await this.service.system.updateUserInfo(user);
         this.success(user);
     }
-  
-    async updateUserPermission() {
+
+    public async updateUserPermission() {
         const rules = {
             id: 'id',
             itemDepartmentPermissionFlag: 'bool',
@@ -161,12 +159,12 @@ class SystemController extends BaseController {
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
         var user = await this.service.system.getUserById(model.id);
-        if(!user){
+        if (!user) {
             this.failed('用户不存在');
             return;
         }
@@ -174,24 +172,24 @@ class SystemController extends BaseController {
         user = await this.service.system.updateUserInfo(user);
         this.success(user);
     }
-  
-    async updateUserRoles() {
-      
+
+    public async updateUserRoles() {
+
     }
-  
-    async updateUserPassword() {
+
+    public async updateUserPassword() {
         const rules = {
             id: 'id',
             password: 'string'
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
-        if(errors){
+        if (errors) {
             this.validationFailed(errors);
             return;
         }
         var user = await this.service.system.getUserById(model.id);
-        if(!user){
+        if (!user) {
             this.failed('用户不存在');
             return;
         }
@@ -200,12 +198,10 @@ class SystemController extends BaseController {
         this.success(user);
     }
 
-    async deleteUser() {
+    public async deleteUser() {
         const id = this.ctx.params.id;
         const success = await this.service.system.deleteUserById(id);
 
         success ? this.success() : this.failed();
     }
 }
-
-module.exports = SystemController;

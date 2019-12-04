@@ -1,20 +1,18 @@
-'use strict';
+import BaseController from '../base'
 
-const BaseController = require('../base');
-
-class BranchGroupController extends BaseController {
-    async getBranchGroups() {
+export default class BranchGroupController extends BaseController {
+    public async getBranchGroups() {
         const branchGroups = await this.service.branch.getBranchGroups();
         this.success(branchGroups.branchGroups);
     }
 
-    async getBranchGroup() {
+    public async getBranchGroup() {
         const id = this.ctx.params.id;
         const branchGroup = await this.service.branch.getBranchGroup(id);
         this.success(branchGroup);
     }
 
-    async createBranchGroup() {
+    public async createBranchGroup() {
         const rules = {
             name: { type: 'string' }
         };
@@ -24,7 +22,7 @@ class BranchGroupController extends BaseController {
         this.success(branchGroup);
     }
 
-    async updateBranchGroup() {
+    public async updateBranchGroup() {
         const rules = {
             id: { type: 'int' },
             name: { type: 'string' }
@@ -41,19 +39,19 @@ class BranchGroupController extends BaseController {
         success ? this.success() : this.failed();
     }
 
-    async deleteBranchGroup() {
+    public async deleteBranchGroup() {
         const id = this.ctx.params.id;
         const success = await this.service.branch.deleteBranchGroup(id);
         success ? this.success() : this.failed();
     }
 
-    async getBranchGroupBranchs() {
+    public async getBranchGroupBranchs() {
         const branchGroupId = this.ctx.params.id;
         const branchs = await this.service.branch.getBranchGroupBranchs(branchGroupId);
         this.success(branchs);
     }
 
-    async deleteBranchGroupBranchs() {
+    public async deleteBranchGroupBranchs() {
         const branchGroupId = this.ctx.params.id;
         const rules = {
             branchIdList: {
@@ -70,7 +68,7 @@ class BranchGroupController extends BaseController {
         success ? this.success() : this.failed();
     }
 
-    async addBranchGroupBranchs() {
+    public async addBranchGroupBranchs() {
         const branchGroupId = this.ctx.params.id;
         const rules = {
             branchIdList: {
@@ -87,5 +85,3 @@ class BranchGroupController extends BaseController {
         success ? this.success() : this.failed();
     }
 }
-
-module.exports = BranchGroupController;

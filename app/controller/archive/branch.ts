@@ -1,9 +1,8 @@
-'use strict';
 
-const BaseController = require('../base');
+import BaseController from '../base'
 
-class BranchController extends BaseController {
-    async getBranchs() {
+export default class BranchController extends BaseController {
+    public async getBranchs() {
         const { pageIndex, pageSize, keyword, parentId } = this.ctx.request.query;
         const response = await this.service.branch.getBranchs(pageIndex, pageSize, keyword, parentId);
         this.success({
@@ -12,13 +11,13 @@ class BranchController extends BaseController {
         });
     }
 
-    async getBranch() {
+    public async getBranch() {
         const id = this.ctx.params.id;
         const branch = await this.service.branch.getBranch(id);
         this.success(branch);
     }
 
-    async createBranch() {
+    public async createBranch() {
         const rules = {
             id: { type: 'int' },
             name: { type: 'string' }
@@ -35,7 +34,7 @@ class BranchController extends BaseController {
         this.success(branch);
     }
 
-    async updateBranch() {
+    public async updateBranch() {
         const rules = {
             id: { type: 'int' },
             name: { type: 'string' }
@@ -52,18 +51,18 @@ class BranchController extends BaseController {
         success ? this.success() : this.failed();
     }
 
-    async deleteBranch() {
+    public async deleteBranch() {
         const id = this.ctx.params.id;
         const success = await this.service.branch.deleteBranch(id);
         success ? this.success() : this.failed();
     }
 
-    async getBranchStores() {
+    public async getBranchStores() {
         const id = this.ctx.params.id;
         const stores = this.service.branch.getBranchStores(id);
         this.success(stores);
     }
-    async updateBranchStores() {
+    public async updateBranchStores() {
         const rules = {
 
         };
@@ -79,5 +78,3 @@ class BranchController extends BaseController {
         success ? this.success() : this.failed();
     }
 }
-
-module.exports = BranchController;

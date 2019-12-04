@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     ILLEGAL_TOKEN: 50008,
     TOKEN_EXPIRED: 50014,
     OTHER_CLIENTS_LOGGERD_IN: 50012,

@@ -2,10 +2,10 @@
 var grpc = require('grpc');
 var protoLoader = require('@grpc/proto-loader');
 
-function convert(value, fn) {
+function convert(value: any, fn: Function) {
     const type = Object.prototype.toString.call(value)
     if (type === '[object Array]') {
-        const newArr = []
+        let newArr: any[] = []
         for (let index = 0; index < value.length; index++) {
             newArr.push(convert(value[index], fn))
         }
@@ -22,7 +22,7 @@ function convert(value, fn) {
     }
 }
 
-module.exports = (protoFilePath, packageName, serviceName, address) => {
+export default (protoFilePath: string, packageName: string, serviceName: string, address: string) => {
     var packageDefinition = protoLoader.loadSync(
         protoFilePath,
         {
