@@ -1,7 +1,8 @@
 import {
   BranchGroup,
   Branch,
-  Store
+  Store,
+  Paged
 } from '../model/module'
 import { Context, Service } from 'egg';
 import grpcLoader from '../grpcLoader';
@@ -78,14 +79,15 @@ export default class BranchService extends Service {
    * @param keyword 搜索关键字
    * @param parentId 上级机构编码
    */
-  public async getBranchs(pageIndex: number = 1, pageSize: number = 20, keyword: string = '', parentId: string = ''): Promise<Array<Branch>> {
+  public async getBranchs(pageIndex: number = 1, pageSize: number = 20, keyword: string = '', parentId: string = ''): Promise<Paged<Branch>> {
     const param = {
       pageIndex,
       pageSize,
       keyword,
       parentId
     }
-    return this.client.call('GetBranchs', param)
+    let response = await this.client.call('GetBranchs', param)
+    return new Paged<Branch>(response.branchs, response.totalCount)
   }
 
   public async getBranch(id: number): Promise<Branch> {

@@ -1,4 +1,4 @@
-import { 
+import {
   Paged,
   Menu,
   Role,
@@ -85,8 +85,13 @@ export default class SystemService extends Service {
     return this.client.call('CreateUser', user)
   }
 
-  public async updateUserInfo(user: User): Promise<boolean> {
-    let response = await this.client.call('UpdateUserInfo', user)
+  public async updateUser(user: User): Promise<boolean> {
+    let response = await this.client.call('UpdateUser', user)
+    return response.body
+  }
+
+  public async updateUserRoles(userId: number, roles: Array<number>) {
+    let response = await this.client.call('UpdateUserRoles', { userId, roles })
     return response.body
   }
 
@@ -96,7 +101,7 @@ export default class SystemService extends Service {
   }
 
   public async getRolesByUserId(userId: number): Promise<Array<Role>> {
-    let response = this.client.call('GetRolesByUserId', { body: userId })
+    let response = await this.client.call('GetRolesByUserId', { body: userId })
     return response.roles
   }
 

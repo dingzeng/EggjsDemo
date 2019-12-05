@@ -110,7 +110,15 @@ export default class SystemController extends BaseController {
     public async getUser() {
         const id = this.ctx.params.id;
         const user = await this.service.system.getUserById(id);
-        this.success(user);
+        const userRoles = await this.service.system.getRolesByUserId(id);
+        const response = Object.assign({}, user, { roles: userRoles.map(r => r.id) })
+        this.success(response);
+    }
+
+    public async getUserPage() {
+        this.success({
+            roles: await this.service.system.getAllRoles()
+        })
     }
 
     public async createUser() {
@@ -119,7 +127,10 @@ export default class SystemController extends BaseController {
             username: 'string',
             password: 'string',
             name: 'string',
-            mobile: { type: 'string', required: false }
+            mobile: 'string?',
+            roles: {
+                type: 'array', itemType: 'int'
+            }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
@@ -128,17 +139,22 @@ export default class SystemController extends BaseController {
             return;
         }
         const user = await this.service.system.createUser(model);
+        await this.service.system.updateUserRoles(user.id, model.roles);
+
         this.success(user);
     }
 
-    public async updateUserInfo() {
+    public async updateUser() {
         const rules = {
             id: 'id',
-            branchCode: 'string',
+            branchId: 'string',
             username: 'string',
             password: 'string',
             name: 'string',
-            mobile: { type: 'string', required: false }
+            mobile: 'string?',
+            roles: {
+                type: 'array', itemType: 'int'
+            }
         }
         const model = this.ctx.request.body;
         const errors = this.app.validator.validate(rules, model);
@@ -152,8 +168,9 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        const success = await this.service.system.updateUserInfo(user);
-        if(!success) {
+        const success = await this.service.system.updateUser(user);
+        await this.service.system.updateUserRoles(user.id, model.roles);
+        if (!success) {
             this.failed()
         }
         this.success(user);
@@ -177,15 +194,11 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        const success = await this.service.system.updateUserInfo(user);
-        if(!success) {
+        const success = await this.service.system.updateUser(user);
+        if (!success) {
             this.failed();
         }
         this.success(user);
-    }
-
-    public async updateUserRoles() {
-
     }
 
     public async updateUserPassword() {
@@ -205,7 +218,7 @@ export default class SystemController extends BaseController {
             return;
         }
         Object.assign(user, model);
-        await this.service.system.updateUserInfo(user);
+        await this.service.system.updateUser(user);
         this.success(user);
     }
 
