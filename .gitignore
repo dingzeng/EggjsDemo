@@ -5,6 +5,9 @@ package-lock.json
 # local config
 /config/config.local.ts
 
+# for protoc-gen-ts
+generated/
+
 # eggjs ts template
 logs/
 npm-debug.log
